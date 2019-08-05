@@ -1,0 +1,56 @@
+{% extends 'base.html' %}
+
+
+{% block body_block %}
+<div class="container p-5">
+  <br>
+  <br>
+  <div class="container">
+      <div class="row justify-content-center">
+        <div class="col-md-8">
+          <div class="card-group mb-0">
+            <div class="card p-4">
+              <div class="card-body">
+                <h1>Login</h1>
+                <p class="text-muted">Sign In to your account</p>
+                <form method="POST" action="{% url 'login' %}">
+                  {% csrf_token %}
+                  {% for field in form %}
+                  {{field.errors}}
+                    <label class="control-label" for="id_{{ field.name }}">{{ field.label }}</label>
+                      <div class="">
+                        <input type="{{ field.field.widget.input_type }}" class="form-control"
+                          name="{{ field.html_name }}"
+                          id="id_{{ field.name }}"
+                          value="" placeholder="{{ field.label }}">
+                      </div>
+                  {% endfor %}
+                <br>
+                <div class="row">
+                  <div class="col-6">
+                    <input type="submit" class="btn btn-primary px-4" value="Login">
+                  </div>
+                </form>
+                  <div class="col-6 text-right">
+                    <button type="button" class="btn btn-link px-0">Forgot password?</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="card text-white bg-primary py-5 d-md-down-none" style="width:44%">
+              <div class="card-body text-center">
+                <div>
+                  <h2>Sign up</h2>
+                  <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+                  <a href="{% url 'user_auth:register' %}"><button type="button" class="btn btn-primary active mt-3">Register Now!</button></a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+</div>
+
+
+{% endblock %}

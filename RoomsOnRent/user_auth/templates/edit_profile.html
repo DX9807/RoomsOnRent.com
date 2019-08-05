@@ -1,0 +1,116 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title_block %}{% endblock %}
+
+
+
+{% block body_block %}
+<div class="container p-5">
+<div class="jumbotron">
+    <div class="row m-y-2">
+        <!-- edit form column -->
+        <div class="col-lg-4 ">
+          <form role="form" action="" method="post" enctype="multipart/form-data">
+            <h2>Edit Profile</h2>
+            <hr>
+
+              {% csrf_token %}
+            <div class="col-lg-4">
+                    {% if user.userprofile.avtar %}
+                    <img src="{{ user.userprofile.avtar.url }}" alt="{{user.username}}" width="130"  class="rounded-circle mb-2 img-thumbnail">
+                    {% else %}
+                    <img src="{% static 'user-icon.png' %}" alt="{{user.username}}" width="130"  class="rounded-circle mb-2 img-thumbnail">
+                    {% endif %}
+                    <label class="custom-file">
+                      <input type="file" id="file" class="">
+                      <span class="custom-file-control">Upload New image</span>
+                    </label>
+            </div>
+        </div>
+
+        <!-- <div class="col-lg-8">
+            <div class="alert alert-info alert-dismissable"> <a class="panel-close close" data-dismiss="alert">×</a>
+                This is an <strong>.alert</strong>. Use this to show important messages to the user.
+            </div>
+        </div> -->
+        <div class="col-lg-8 push-lg-4 personal-info">
+
+                <div class=" row">
+                    <label class="col-lg-3 col-form-label form-control-label">First name</label>
+                    <div class="col-lg-9">
+                        <input class="form-control" type="text" value="{{user.first_name}}" />
+                    </div>
+                </div>
+                <br>
+                <div class="row">
+                    <label class="col-lg-3 col-form-label form-control-label">Last name</label>
+                    <div class="col-lg-9">
+                        <input class="form-control" type="text" value="{{user.last_name}}" />
+                    </div>
+                </div>
+                <br>
+                <div class="row">
+                    <label class="col-lg-3 col-form-label form-control-label">Username</label>
+                    <div class="col-lg-9">
+                        <input class="form-control" type="text" value="{{user.username}}" />
+                    </div>
+                </div>
+                <br>
+                <div class="row">
+                    <label class="col-lg-3 col-form-label form-control-label">Email</label>
+                    <div class="col-lg-9">
+                        <input class="form-control" type="email" value="{{user.email}}" />
+                    </div>
+                </div>
+                <br>
+                <div class="row">
+                    <label class="col-lg-3 col-form-label form-control-label">Password</label>
+                    <div class="col-lg-9">
+                        <input class="form-control" type="password" value="{{user.password}}" />
+                    </div>
+                </div>
+                <br>
+                <div class="row">
+                <label class="col-lg-3 col-form-label form-control-label">Mobile</label>
+                <div class="col-lg-9">
+                    <input class="form-control" type="text" value="{{user.userprofile.mobile}}" placeholder="Mobile" />
+                </div>
+                </div>
+                <br>
+                <div class="row">
+                    <label class="col-lg-3 col-form-label form-control-label">Locality</label>
+                    <div class="col-lg-9">
+                        <input class="form-control" type="text" value="{{user.userprofile.locality}}" placeholder="Locality" />
+                    </div>
+                </div>
+                <br>
+                <div class="row">
+                    <label class="col-lg-3 col-form-label form-control-label">City/Area</label>
+                    <div class="col-lg-9">
+                        <input class="form-control" type="text" value="{{user.userprofile.city}}" placeholder="City/Area" />
+                    </div>
+                </div>
+                <br>
+                    <div class="row">
+                    <label class="col-lg-3 col-form-label form-control-label">State</label>
+                    <div class="col-lg-9">
+                        <input class="form-control" type="text" value="{{user.userprofile.state}}" placeholder="State" />
+                    </div>
+                    </div>
+                <br>
+                <div class="row">
+                    <label class="col-lg-3 col-form-label form-control-label"></label>
+                    <div class="col-lg-9">
+                        <input type="reset" class="btn btn-secondary" value="Cancel" />
+                        <input type="submit" class="btn btn-primary" value="Save Changes" />
+                    </div>
+                </div>
+        </div>
+    </div>
+    </form>
+</div>
+<hr />
+</div>
+
+{% endblock %}

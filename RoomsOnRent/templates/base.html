@@ -1,0 +1,156 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    <link rel="stylesheet" type="text/css" href="{% static 'three.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'user_auth/login.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'user_auth/register.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'user_auth/edit-profile.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'style.css' %}">
+    <title>{% block title_block %}  {% endblock %}</title>
+  </head>
+
+  <!-- From here the content of the body starts -->
+  <body>
+    <div class="container">
+    <nav id="navbar-scrollpy" class="navbar  fixed-top navbar-expand-lg navbar-light bg-primary">
+   <a class="navbar-brand" href="{% url 'index' %}"><img class="rounded mb-2 " src="{% static 'logo.png' %}" alt="RoR" height="50" width="50" ></a>
+   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+     <span class="navbar-toggler-icon"></span>
+   </button>
+
+   <div class="collapse navbar-collapse justify-content-end "  id="navbarSupportedContent">
+     <ul class="navbar-nav ">
+       <li class="nav-item active">
+         <a class="nav-link" href="{% url 'index' %}">Home <span class="sr-only">(current)</span></a>
+       </li>
+       <li class="nav-item">
+         <a class="nav-link" href="#">Locations</a>
+       </li>
+       <li class="nav-item dropdown">
+         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+           Dropdown
+         </a>
+         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+           <a class="dropdown-item" href="#">Action</a>
+           <a class="dropdown-item" href="#">Another action</a>
+           <div class="dropdown-divider"></div>
+           <a class="dropdown-item" href="#">Something else here</a>
+         </div>
+       </li>
+       <li class="nav-item">
+         <a class="nav-link" href="#">Blog</a>
+       </li>
+       {% if user.is_authenticated %}
+       <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+           {% if user.userprofile.avtar %}
+           <img src="{{ user.userprofile.avtar.url }}" alt="{{user.username}}" width="40" height="40" class="rounded-circle mb-2">
+           {% else %}
+           <img src="{% static 'user-icon.png' %}" alt="{{user.username}}" width="40" height="40" class="rounded-circle mb-2">
+           {% endif %}
+           </a>
+           <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <a class="dropdown-item" href="{% url 'user_auth:edit-profile' %}">Profile</a>
+            <hr>
+            <a class="dropdown-item" href="{% url 'logout' %}">Logout</a>
+           </div>
+       </li>
+
+      {% else %}
+      <li class="nav-item ">
+          <a class="nav-link" href="{% url 'login' %}">Login</a>
+      </li>
+      {% endif %}
+  </ul>
+
+     </div>
+
+   </div>
+ </nav>
+
+</div>
+
+
+
+
+
+
+
+
+     {% block body_block %}
+
+
+     {% endblock %}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- Footer section starts here............... -->
+
+
+<nav id="navbar-scrollpy" class="navbar navbar-expand-lg bg-primary navbar-light">
+<a class="navbar-brand" href="{% url 'index' %}"><img class="rounded mb-2 img-thumbnail" src="{% static 'logo.png' %}" alt="RoR" height="200" width="200" ></a>
+<!-- <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+ <span class="navbar-toggler-icon"></span>
+</button> -->
+
+<!-- <div class="collapse navbar-collapse" id="navbarSupportedContent"> -->
+ <ul class="navbar-nav mr-auto">
+   <div class="container">
+     <li class="nav-item active">
+       <a class="nav-link" href="#">Company<span class="sr-only">(current)</span></a>
+     </li>
+   </div>
+  <div class="container-fluid">
+    <li class="nav-item">
+      <a class="nav-link" href="#">About-Us</a>
+    </li>
+  </div>
+  <div class="container-fluid">
+    <li class="nav-item">
+      <a class="nav-link" href="#">What we do?</a>
+    </li>
+  </div>
+  <div class="container-fluid">
+    <li class="nav-item">
+      <a class="nav-link" href="#">Members</a>
+    </li>
+  </div>
+  <div class="container-fluid">
+    <li class="nav-item">
+      <a class="nav-link" href="#">Contact-Us</a>
+    </li>
+  </div>
+ </ul>
+
+<!-- </div> -->
+</nav>
+
+
+
+ <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+
+
+
+
+  </body>
+</html>

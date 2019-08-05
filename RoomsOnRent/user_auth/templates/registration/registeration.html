@@ -1,0 +1,71 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block body_block %}
+<div class="container p-8">
+
+      <div class="auth-wrapper">
+          <div class="auth-content container">
+              <div class="card">
+                  <div class="row align-items-center">
+                      <div class="col-md-6">
+                          <div class="card-body">
+                            <!-- registration form for the user -->
+
+                            <form class="" action="{% url 'user_auth:register' %}" method="post" enctype="multipart/form-data">
+                              {% csrf_token %}
+
+                              <img src="{% static 'logo.png' %}" alt="RoR" class="rounded mb-4" height="30" width="30">
+
+                              <h4 class="mb-3 f-w-400">Register Here</h4>
+                              <hr>
+                              {% for field in user_form %}
+                              {{field.errors}}
+                              <label class="control-label" for="id_{{ field.name }}">{{ field.label }}</label>
+                                <div class="">
+                                  <input type="{{ field.field.widget.input_type }}" class="form-control"
+                                    name="{{ field.html_name }}"
+                                    id="id_{{ field.name }}"
+                                    value="" placeholder="{{ field.field.widget.attrs.placeholder }}">
+                                </div>
+                              {% endfor %}
+
+                              {% for field in user_profile_form %}
+                                {{field.errors}}
+                              <label class="control-label" for="id_{{ field.name }}">{{ field.label }}</label>
+                                <div class="">
+                                  <input type="{{ field.field.widget.input_type }}" class="{{field.field.widget.attrs.class}}"
+                                    name="{{ field.html_name }}"
+                                    id="id_{{ field.name }}"
+                                    value="" placeholder="{{field.field.widget.attrs.placeholder }}">
+                                </div>
+                              {% endfor %}
+                              <br>
+                              <input class="btn btn-primary shadow-2 mb-4" type="submit" name="submit" value="Sign Up">
+
+                              <div class="saprator"><span>OR</span></div>
+                              <button class="btn btn-facebook mb-2 mr-2"><i class="fab fa-facebook-f"></i>facebook</button>
+                              <button class="btn btn-googleplus mb-2 mr-2"><i class="fab fa-google-plus-g"></i>Google</button>
+                              <button class="btn btn-twitter mb-2 mr-2"><i class="fab fa-twitter"></i>Twitter</button>
+                              <div class="form-group text-left mt-2">
+
+                              </div>
+                              <hr>
+
+                              <p class="mb-2">Already have an account? <a href="{% url 'login' %}" class="f-w-400">Log in</a></p>
+                            </form>
+
+                          </div>
+                      </div>
+                      <div class="col-md-6 d-none d-md-block bg-primary">
+                          <img src="{% static 'H.jpg' %}" alt="H" class="rounded float-left" height="1000" width="520">
+                      </div>
+                  </div>
+              </div>
+
+          </div>
+      </div>
+
+</div>
+
+{% endblock %}
