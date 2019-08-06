@@ -20,10 +20,12 @@ from django.contrib import admin
 from django.urls import path, include
 from user_auth.views import LoginView,LogoutView, IndexTemplateView
 
+
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('',IndexTemplateView.as_view(),name='index'),
     path('user_auth/',include('user_auth.urls')),
     path('accounts/login/',LoginView.as_view(),name='login'),
     path('accounts/logout/',LogoutView.as_view(),name='logout'),
+    path('blog/',include('Blog.urls')),
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

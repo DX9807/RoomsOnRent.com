@@ -1,0 +1,68 @@
+{% extends 'base.html' %}
+
+
+
+{% block title_block %}  {% endblock %}
+{% block body_block %}
+ <div class="container p-5">
+   <div class="jumbotron">
+
+     <h1 class='posttitle loader'>{{ post.title }}</h1>
+     <hr class="my-4">
+     <div class="container">
+
+       <img class="img-fluid" src="{{ object.image_url|default_if_none:'#'}}">
+     </div>
+    <hr class="my-4">
+     {% if post.published_date %}
+
+         <div class="date postdate">
+             {{ post.published_date }}
+         </div>
+       <hr class="my-4">
+     {% else %}
+        {% if request.user == post.author %}
+         <a class="btn btn-success" href="{% url 'Blog:post_publish' pk=post.pk %}">Publish</a>
+         {% endif %}
+     {% endif %}
+
+   <p class='postcontent' >{{ post.text|safe|linebreaksbr }}</p>
+
+
+   {% if request.user == post.author %}
+       <a class="btn btn-success" href="{% url 'Blog:post_edit' pk=post.pk %}">Edit</a>
+       <a class="btn btn-danger" href="{% url 'Blog:post_remove' pk=post.pk %}">Remove</a>
+   {% endif %}
+
+
+
+   <hr>
+   <a class="btn btn-primary float-right" href="{% url 'Blog:add_comment_to_post' pk=post.pk %}">Add comment</a>
+   <div class="container">
+
+
+   {% for comment in post.comments.all %}
+   <br>
+   {% if user.is_authenticated or comment.approved_comment %}
+
+           {{ comment.created_date }}
+           {% if not comment.approved_comment %}
+               <a class="btn btn-danger" href="{% url 'Blog:comment_remove' pk=comment.pk %}">Remove</a>
+               <a class="btn btn-success" href="{% url 'Blog:comment_approve' pk=comment.pk %}">Ok</a>
+           {% endif %}
+
+       <p>{{ comment.text|safe|linebreaks }}</p>
+       <p>Posted by: <strong>{{ comment.author }}</strong></p>
+       <hr>
+
+   {% endif %}
+   {% empty %}
+   <p>No comments posted.</p>
+   {% endfor %}
+   </div>
+
+   </div>
+   </div>
+
+
+{% endblock %}

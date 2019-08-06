@@ -13,6 +13,9 @@
     <link rel="stylesheet" type="text/css" href="{% static 'user_auth/register.css' %}">
     <link rel="stylesheet" type="text/css" href="{% static 'user_auth/edit-profile.css' %}">
     <link rel="stylesheet" type="text/css" href="{% static 'style.css' %}">
+    {# MEDIUM STYLE EDITOR#}
+    <script src="//cdn.jsdelivr.net/medium-editor/latest/js/medium-editor.min.js"></script>
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/medium-editor/latest/css/medium-editor.min.css" type="text/css" media="screen" charset="utf-8">
     <title>{% block title_block %}  {% endblock %}</title>
   </head>
 
@@ -44,9 +47,22 @@
            <a class="dropdown-item" href="#">Something else here</a>
          </div>
        </li>
-       <li class="nav-item">
-         <a class="nav-link" href="#">Blog</a>
+       {% if user.is_authenticated %}
+       <li class="nav-item dropdown">
+         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Blog</a>
+         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+           <a class="dropdown-item" href="{% url 'Blog:post_list' %}">Posts</a>
+           <hr>
+           <a class="dropdown-item" href="{% url 'Blog:post_new' %}">New Post</a>
+           <hr>
+           <a class="dropdown-item" href="{% url 'Blog:post_draft_list' %}">Drafts</a>
+         </div>
        </li>
+       {% else %}
+       <li class="nav-item">
+         <a class="nav-link" href="{% url 'Blog:post_list' %}">Blog</a>
+       </li>
+       {% endif %}
        {% if user.is_authenticated %}
        <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
