@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+
+
+{% block title_block %}  {% endblock %}
+{% block body_block %}
+
+<div class="container p-5">
+<div class="jumbotron">
+
+      {% for room in room_list %}
+              <div class="row">
+                <div class="col-lg-4">
+
+                <a href="{% url 'room_service:room_detail' pk=room.pk %}">
+                  <img class="img-fluid img-thumbnail" src="{{ room.cover_image.url|default_if_none:'#'}}" alt="{{ room.id }}" height="200" width="200">
+                </a>
+
+                </div>
+                <br><br>
+                <div class="col-lg-8 push-lg-4">
+                  <h1><a href="{% url 'room_service:room_detail' pk=room.pk %}">{{ room.id }}</a></h1>
+
+                      <p>Added on: {{ room.added_date|date:"D M Y"}}</p>
+
+                </div>
+              </div>
+
+      {% endfor %}
+</div>
+</div>
+{% endblock %}

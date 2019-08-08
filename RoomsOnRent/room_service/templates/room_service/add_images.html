@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+
+
+
+{% block title_block %} Comment {% endblock %}
+
+
+{% block body_block %}
+    <div class="container p-5">
+      <div class="jumbotron">
+        <h1>New Images</h1>
+        <form method="POST" class="">
+        {% csrf_token %}
+        {{ formset.management_form }}
+     <table>
+         {% for form in formset %}
+         {{ form }}
+         {% endfor %}
+     </table>
+        <button type="submit" class="btn btn-primary">Add Images</button>
+        </form>
+      </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,62 @@
+{% extends 'base.html' %}
+
+
+{% block title_block %}  {% endblock %}
+{% block body_block %}
+
+<div class="container p-5">
+  <div class="jumbotron">
+
+    <h1 class='posttitle loader'>{{ room.ownner }}</h1>
+    <hr class="my-4">
+    <div class="container">
+
+      <img class="img-fluid" src="{{ room.cover_image.url|default_if_none:'#'}}">
+    </div>
+   <hr class="my-4">
+
+        <div class="date postdate">
+            {{ room.added_date }}
+        </div>
+      <hr class="my-4">
+  State :<p class='postcontent' >{{ room.state|safe|linebreaksbr }}</p>
+  City/Area :<p class='postcontent' >{{ room.city_area|safe|linebreaksbr }}</p>
+  Street Address :<p class='postcontent' >{{ room.street_address|safe|linebreaksbr }}</p>
+  Mobile :<p class='postcontent' >{{ room.mobile|safe|linebreaksbr }}</p>
+  {% if room.room_status %}
+  Room-Status :<p class="postcontent">Available</p>
+  {% else %}
+  Room-Status :<p class="postcontent">Not Available</p>
+  {% endif %}
+  Religious-Group :<p class='postcontent' >{{ room.religious_group|safe|linebreaksbr }}</p>
+  Monthly-Rent :<p class='postcontent' >{{ room.monthly_rent|safe|linebreaksbr }}</p>
+  Description :<p class='postcontent' >{{ room.desciption|safe|linebreaksbr }}</p>
+
+
+  {% if request.user == room.ownner %}
+      <a class="btn btn-success" href="{% url 'room_service:room_edit' pk=room.pk %}">Edit</a>
+      <a class="btn btn-danger" href="{% url 'room_service:room_remove' pk=room.pk %}">Remove</a>
+  {% endif %}
+
+  <hr>
+  {% if request.user == room.ownner %}
+  <a class="btn btn-primary float-right" href="{% url 'room_service:add_image_to_room' pk=room.pk %}">Add Images</a>
+  <div class="container">
+  {% endif %}
+
+  {% for img in roomimages %}
+    <img src="{{ img.room_image.url }}" width=360>
+    {{ img.room_image.url }}
+    <br>
+
+  {% endfor %}
+  </div>
+
+
+
+  </div>
+
+  </div>
+
+
+{% endblock %}

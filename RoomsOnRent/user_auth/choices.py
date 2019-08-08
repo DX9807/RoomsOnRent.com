@@ -186,3 +186,17 @@ STATES_UNION_TERRITORIES =(
 #                 Vishwas Nagar
 #                 Wazirpur
 #               ]
+
+
+
+
+RELIGIOUS_GROUP =(
+                 ('1',( "Hinduism")),
+                 ('2', ("Islam")),
+                 ('3',( "Christianity")),
+                 ('4',("Sikhism")),
+                 ('5', ("Jainism")),
+                 ('6', ("Budhism")),
+                 ('7',("Zoroastrianism")),
+                 ('8',("Other")),
+                )
