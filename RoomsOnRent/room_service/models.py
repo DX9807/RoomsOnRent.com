@@ -31,7 +31,10 @@ class Room(models.Model):
 
 class RoomImages(models.Model):
     room = models.ForeignKey(Room, on_delete=models.CASCADE ,related_name='room_images')
-    room_image = models.ImageField(upload_to=upload_room_images, blank=True)
+    room_image = models.ImageField(upload_to=upload_room_images,null=False, blank=False)
+
+    def get_absolute_url(self):
+        return reverse("room_service:room_list")
 
     def __str__(self):
         return str(self.room)

@@ -38,10 +38,13 @@ def add_images_to_room(request, pk):
                                queryset=RoomImages.objects.none())
         if formset.is_valid():
             for form in formset:
-                data = form.cleaned_data
-                image = data.get('room_image')
-                photo = RoomImages(room=room, room_image=image)
-                photo.save()
+                data = form.save(commit=False)
+                data.room = room
+                if 'room_image' in request.FILES:
+                    data.room_image = request.FILES['room_image']
+
+
+                data.save()
             return redirect('room_service:room_detail', pk=room.pk)
     else:
         formset = ImageFormSet(queryset=RoomImages.objects.none())

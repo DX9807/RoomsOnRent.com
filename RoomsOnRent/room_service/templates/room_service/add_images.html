@@ -9,7 +9,7 @@
     <div class="container p-5">
       <div class="jumbotron">
         <h1>New Images</h1>
-        <form method="POST" class="">
+        <form method="POST" class="" enctype="multipart/form-data">
         {% csrf_token %}
         {{ formset.management_form }}
      <table>

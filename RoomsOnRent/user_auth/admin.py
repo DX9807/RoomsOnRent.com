@@ -7,3 +7,5 @@ class UserProfileAdmin(admin.ModelAdmin):
 
 
 admin.site.register(models.UserProfile,UserProfileAdmin)
+admin.site.register(models.States)
+admin.site.register(models.City)

@@ -27,7 +27,7 @@ class PostDetailView(DetailView):
 
 class CreatePostView(LoginRequiredMixin,CreateView):
     login_url = '/login/'
-    redirect_field_name = 'blog/post_detail.html'
+    redirect_field_name = 'Blog/post_detail.html'
 
     form_class = PostForm
 
@@ -40,17 +40,17 @@ class CreatePostView(LoginRequiredMixin,CreateView):
 
 class PostUpdateView(LoginRequiredMixin,UpdateView):
     login_url = '/login/'
-    redirect_field_name = 'blog/post_detail.html'
+    redirect_field_name = 'Blog/post_detail.html'
 
     form_class = PostForm
 
     model = Post
 
 
-    
+
 class DraftListView(LoginRequiredMixin,ListView):
     login_url = '/login/'
-    redirect_field_name = 'blog/post_list.html'
+    redirect_field_name = 'Blog/post_list.html'
 
     model = Post
 
@@ -85,7 +85,7 @@ def add_comment_to_post(request, pk):
             return redirect('Blog:post_detail', pk=post.pk)
     else:
         form = CommentForm()
-    return render(request, 'blog/comment_form.html', {'form': form})
+    return render(request, 'Blog/comment_form.html', {'form': form})
 
 
 @login_required

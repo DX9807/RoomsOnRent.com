@@ -1,13 +1,13 @@
 {% extends 'base.html' %}
 
 
-{% block title_block %}  {% endblock %}
+{% block title_block %} room-detail {% endblock %}
 {% block body_block %}
 
 <div class="container p-5">
   <div class="jumbotron">
 
-    <h1 class='posttitle loader'>{{ room.ownner }}</h1>
+    <h1 class='posttitle loader'>{{ room.ownner.first_name }} &nbsp{{ room.ownner.last_name }} </h1>
     <hr class="my-4">
     <div class="container">
 
@@ -19,43 +19,108 @@
             {{ room.added_date }}
         </div>
       <hr class="my-4">
-  State :<p class='postcontent' >{{ room.state|safe|linebreaksbr }}</p>
-  City/Area :<p class='postcontent' >{{ room.city_area|safe|linebreaksbr }}</p>
-  Street Address :<p class='postcontent' >{{ room.street_address|safe|linebreaksbr }}</p>
-  Mobile :<p class='postcontent' >{{ room.mobile|safe|linebreaksbr }}</p>
-  {% if room.room_status %}
-  Room-Status :<p class="postcontent">Available</p>
-  {% else %}
-  Room-Status :<p class="postcontent">Not Available</p>
-  {% endif %}
-  Religious-Group :<p class='postcontent' >{{ room.religious_group|safe|linebreaksbr }}</p>
-  Monthly-Rent :<p class='postcontent' >{{ room.monthly_rent|safe|linebreaksbr }}</p>
-  Description :<p class='postcontent' >{{ room.desciption|safe|linebreaksbr }}</p>
+      <div class="container room-detail">
+        <div class="row">
+          <div class="col-xl-3 col-lg-3 col-md-3 col-sm-3 col-xs-3 mx-auto">
+            <label class='font-weight-bolder f-20' for="State">State:</label>
+            <p class='font-weight-bolder font-italic'  >{{ room.get_state_display|safe }}</p>
+          </div>
+          <div class="col-xl-3 col-lg-3 col-md-3 col-sm-3 col-xs-3 mx-auto">
+            <label class='font-weight-bolder f-20'  for="City/Area">City/Area:</label>
+            <p class='font-weight-bolder font-italic' >{{ room.city_area|safe }}</p>
+          </div>
+          <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-xs-6 mx-auto">
+            <label class='font-weight-bolder f-20'  for="Street Address">Street Address:</label>
+            <p class='font-weight-bolder font-italic' >{{ room.street_address|safe }}</p>
+          </div>
+        </div>
 
+      </div>
+
+      <div class="container">
+        <div class="row">
+          <div class="col-xl-3 col-lg-3 col-md-3 col-sm-3 col-xs-3 mx-auto">
+            <label class='font-weight-bolder f-20' for="Mobile">Mobile:</label>
+            <p class='font-weight-bolder font-italic'  >{{ room.mobile|safe }}</p>
+          </div>
+          <div class="col-xl-3 col-lg-3 col-md-3 col-sm-3 col-xs-3 mx-auto">
+            <label class='font-weight-bolder f-20'  for="room_status">Availability:</label>
+            <p class='font-weight-bolder font-italic' >{{ room.room_status|safe }}</p>
+          </div>
+          <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-xs-6 mx-auto">
+            <label class='font-weight-bolder f-20'  for="Religious-Group">Religious-Group:</label>
+            <p class='font-weight-bolder font-italic' >{{ room.get_religious_group_display|safe }}</p>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="container">
+        <div class="row">
+          <div class="col-xl-3 col-lg-3 col-md-3 col-sm-3 col-xs-3 mx-auto">
+            <label class='font-weight-bolder f-20' for="Monthely-Rent">Monthly-Rent:</label>
+            <p class='font-weight-bolder font-italic'>{{ room.monthly_rent|safe }} <i class="fa fa-inr" aria-hidden="true"></i></p>
+          </div>
+          <div class="col-xl-9 col-lg-9 col-md-9 col-sm-9 col-xs-9 mx-auto">
+            <label class='font-weight-bolder f-20'  for="Description">Description:</label>
+            <p class='font-weight-bolder font-italic' >{{ room.desciption|safe }}</p>
+          </div>
+
+        </div>
+
+      </div>
 
   {% if request.user == room.ownner %}
       <a class="btn btn-success" href="{% url 'room_service:room_edit' pk=room.pk %}">Edit</a>
       <a class="btn btn-danger" href="{% url 'room_service:room_remove' pk=room.pk %}">Remove</a>
+      <a class="btn btn-primary float-right" href="{% url 'room_service:add_image_to_room' pk=room.pk %}">Add Images</a>
   {% endif %}
-
   <hr>
-  {% if request.user == room.ownner %}
-  <a class="btn btn-primary float-right" href="{% url 'room_service:add_image_to_room' pk=room.pk %}">Add Images</a>
-  <div class="container">
-  {% endif %}
 
-  {% for img in roomimages %}
-    <img src="{{ img.room_image.url }}" width=360>
-    {{ img.room_image.url }}
-    <br>
+   <div class="container">
 
-  {% endfor %}
+   		<div class="row">
+        {% for img in room.room_images.all %}
+               <div class="col-lg-3 col-md-4 col-xs-6 thumb">
+
+                   <a class="thumbnail" href="#" data-image-id="" data-toggle="modal" data-title=""
+                      data-image="{{ img.room_image.url }}"
+                      data-target="#image-gallery">
+
+                       <img class="img-thumbnail"
+                            src="{{ img.room_image.url }}"
+                            alt="Gallery">
+
+                   </a>
+
+               </div>
+               {% endfor %}
+
+
+           <div class="modal fade" id="image-gallery" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+               <div class="modal-dialog modal-lg">
+                   <div class="modal-content">
+                       <div class="modal-header">
+                           <h4 class="modal-title" id="image-gallery-title"></h4>
+                           <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span><span class="sr-only">Close</span>
+                           </button>
+                       </div>
+                       <div class="modal-body">
+                           <img id="image-gallery-image" class="img-responsive col-md-12" src="">
+                       </div>
+                       <div class="modal-footer">
+                           <button type="button" class="btn btn-secondary float-left" id="show-previous-image"><i class="fa fa-arrow-left"></i>
+                           </button>
+
+                           <button type="button" id="show-next-image" class="btn btn-secondary float-right"><i class="fa fa-arrow-right"></i>
+                           </button>
+                       </div>
+                   </div>
+               </div>
+           </div>
+   	</div>
   </div>
-
-
-
-  </div>
-
+  <hr>
   </div>
 
 
